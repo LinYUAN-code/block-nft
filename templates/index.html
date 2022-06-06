@@ -31,7 +31,7 @@
             }
             return (
                 <div>
-                    <h1>LRJ block Dapp</h1>
+                    <h1>6th block Dapp</h1>
                     <TargetView cv={changeView}></TargetView>
                 </div>
             )
@@ -79,15 +79,17 @@
             }
             let [amount,setAmount] = React.useState("");
             const onAmountChange = (event) => {
-                setamount(event.target.value);
+                setAmount(event.target.value);
             }
             const onTransfer = () => {
-                axios("/transfer",{
-                    name,
+                axios.post("/transfer",{
+                    fName: user.name,
+                    tName: name,
                     amount,
                 }).then((res)=>{
                     console.log(res);
                     // user.assets 
+                    user.amount -= parseInt(amount);
                 })
             }
             return (

@@ -7,7 +7,7 @@ const sqlite3 = require('sqlite3').verbose()
 const db = new sqlite3.Database('dapp')
 const initDB = require("./createDb")
 const bodyparser = require("koa-bodyparser");
-
+const {createUser, transfer} = require("./caller")
 
 initDB();
 
@@ -55,6 +55,7 @@ router.post("/registe",async (ctx)=>{
     const name = ctx.request.body.name;
     const pwd = ctx.request.body.pwd;
     // 先在合约里面创建一个用户
+    createUser(name,0);
     await new Promise((r)=>{
         db.all(`
             SELECT * FROM user 
@@ -106,12 +107,12 @@ function getUserByName(name) {
 }
 
 router.post("/transfer",async (ctx)=>{
-    const fromName = ctx.request.body.name;
-    const toName = ctx.request.body.name;
-    const amount = ctx.request.body.amount;
-
+    const fromName = ctx.request.body.fName;
+    const toName = ctx.request.body.tName;
+    const amount = parseInt(ctx.request.body.amount);
+    console.log(fromName,toName,amount);
     // 操作合约
-
+    transfer(fromName,toName,amount);
 
 
     // 修改数据库
@@ -138,7 +139,7 @@ router.post("/transfer",async (ctx)=>{
             r();
         })
     })
-
+    ctx.body = "转账成功";
 });
 app.use(router.routes())
 app.use(router.allowedMethods());

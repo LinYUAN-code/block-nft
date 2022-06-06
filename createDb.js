@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('dapp');
+const {createUser} = require("./caller")
 
 
 module.exports = function initDB() {
@@ -13,11 +14,12 @@ module.exports = function initDB() {
         SELECT * FROM user 
         WHERE name = "lin"
     `,(err,res)=>{
-        if(!res.length) { //创建超级用户
+        if(!res || !res.length) { //创建超级用户
             db.run(`
                 INSERT INTO user (name,pwd,assets) VALUES 
-                ("lin","123456",9999999999);
+                ("lin","123456",110000);
             `)
+            // createUser("lin",110000);
         }
     })
 }
