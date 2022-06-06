@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin ></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin ></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>LRJ</title>
+</head>
+<body>
+    <div id="app"></div>
+
+
+    <script type="text/babel">
+        const routes = {
+            'login': Login,
+            'home': Home,
+            'userPage': UserPage,
+            'registe': Registe,
+        }
+        function Container() {
+            let [view,setView] = React.useState('home');
+            const TargetView = routes[view];
+            const changeView = (r) => {
+                setView(r);
+            }
+            return (
+                <div>
+                    <h1>LRJ block Dapp</h1>
+                    <TargetView cv={changeView}></TargetView>
+                </div>
+            )
+        }
+
+        function Login(props) {
+            let [name,setName] = React.useState("");
+            let [pwd,setPwd] = React.useState("");
+
+            const onNameChange = (event) => {
+                setName(event.target.value);
+            }
+            const onPwdChange = (event) => {
+                setPwd(event.target.value);
+            }
+            const onLogin = (event) => {
+                axios.post("/login",{
+                    name,
+                    pwd,
+                }).then((res)=>{
+                    console.log(res);
+                    props.cv('home');
+                })
+            }
+            return ( 
+                <div>
+                    <div>
+                        <label htmlFor="name">name: </label><input id="name" type="text" value={name} onChange={onPwdChange}/>
+                    </div>
+                    <div>
+                        <label htmlFor="pwd">pasw: </label><input id="pwd" type="text" value={pwd} onChange={onNameChange}/>
+                    </div>
+                    <div>
+                        <button onClick={onLogin}>Login</button>
+                    </div>
+                </div>
+            )
+        }
+
+        function UserPage() {
+            return (
+                <div>
+
+                </div>
+            )
+        }
+
+        function Home(props) {
+            const onLogin = () => {
+                props.cv("login");
+            }
+            const onRegiste = () => {
+                props.cv("registe");
+            }
+
+            return (
+                <div>
+                    <h2>Home</h2>
+                    <p>a simple Dapp just for homework 2</p>
+                    <div>
+                        <button onClick={onLogin}>login</button>
+                    </div>
+                    <div>
+                        <button onClick={onRegiste}>registe</button>
+                    </div>
+                </div>
+            )
+        }
+        function Registe(props) {
+            let [name,setName] = React.useState("");
+            let [pwd,setPwd] = React.useState("");
+
+            const onNameChange = (event) => {
+                setName(event.target.value);
+            }
+            const onPwdChange = (event) => {
+                setPwd(event.target.value);
+            }
+            const onRegiste = (event) => {
+                axios.post("/registe",{
+                    name,
+                    pwd,
+                }).then((res)=>{
+                    console.log(res);
+                    props.cv('home');
+                })
+            }
+            return (
+                <div>
+                    <div>
+                        <label htmlFor="name">name: </label><input id="name" type="text" value={name} onChange={onPwdChange}/>
+                    </div>
+                    <div>
+                        <label htmlFor="pwd">pasw: </label><input id="pwd" type="text" value={pwd} onChange={onNameChange}/>
+                    </div>
+                    <div>
+                        <button onClick={onRegiste}>Registe</button>
+                    </div>
+                </div>
+            )
+        }
+        ReactDOM.render(<Container></Container>, document.querySelector("#app"));
+    </script>
+</body>
+</html>
