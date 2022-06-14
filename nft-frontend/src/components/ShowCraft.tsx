@@ -3,19 +3,35 @@ import { httpGetCraftList } from "../apis"
 import CraftCard from "./CraftCard"
 import "./ShowCraft.scss"
 
-export default function ShowCraft() {
+type ShowCraftProps = {
+    list?: Array<Craft>
+    banAutoPlay?: boolean
+}
+
+export default function ShowCraft(props:ShowCraftProps) {
     const [list,setList] = useState<Array<Craft>>([]);
     const [activeList,setActiveList] = useState<Array<Craft>>([]);
     const [backList,setBackList] = useState<Array<Craft>>([]);
     const [con,setCon] = useState<Array<boolean>>([]);
     useEffect(()=>{
+        if(props.list) {
+            const res = props.list;
+            setList(res);
+            setActiveList(res.slice(0,Math.min(res.length,4*3)));
+            let n = res.length;
+            let cc = [];
+            for(let i=0;i<Math.ceil(n/12);i++) {
+                cc[i] = false;
+            }
+            cc[0] = true;
+            setCon(cc);
+            return ;
+        }
         (async ()=>{
             let res = await httpGetCraftList();
             res = res.slice(0,Math.min(3*4*3,res.length));
             setList(res);
             setActiveList(res.slice(0,Math.min(res.length,4*3)));
-            setBackList(res.slice(0,Math.min(res.length,4*3)));
-
             let n = res.length;
             let cc = [];
             for(let i=0;i<Math.ceil(n/12);i++) {
@@ -24,7 +40,7 @@ export default function ShowCraft() {
             cc[0] = true;
             setCon(cc);
         })();
-    },[]);
+    },[props.list]);
 
     const [backX,setBackX] = useState(0);
     const [nowX,setNowX] = useState(0);
@@ -113,6 +129,7 @@ export default function ShowCraft() {
         }
     }
     useEffect(()=>{
+        if(props.banAutoPlay)return ;
         if(!list.length)return ;
         let timer = setInterval(()=>{
             let now = 0;
@@ -127,7 +144,7 @@ export default function ShowCraft() {
         return () => {
             clearInterval(timer);
         }
-    },[list,con]);
+    },[list,con,props.banAutoPlay]);
     return (
         <div className="ShowCraft-container"
             style={{

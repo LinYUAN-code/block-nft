@@ -12,6 +12,7 @@ import { gsap } from "gsap";
 import Craft from './views/Craft';
 import useStore from './store';
 import { initCv } from './hook';
+import Search from './views/Search';
 
 
 const routes: Record<string,any> = {
@@ -20,6 +21,7 @@ const routes: Record<string,any> = {
     '/userPage': UserPage,
     '/registe': Registe,
     '/craft': Craft,
+    '/search': Search
 }
 
 function App() {   

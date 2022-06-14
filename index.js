@@ -222,9 +222,51 @@ router.post("/queryCraftListsByName",async (ctx)=>{
             r();
         })
     })
+})
+
+router.post("/queryCraftById",async (ctx)=>{
+    const id = ctx.request.body.id;
+    await new Promise((r)=>{
+        db.all(`
+            SELECT *
+            FROM craft
+            WHERE id = ${id}
+        `,(err,rows)=>{
+            ctx.body = rows[0];
+            r();
+        })
+    })
+})
+
+
+router.post("/updateLikesById", async (ctx)=>{
+    const id = ctx.request.body.id;
+    const likes = ctx.request.body.likes;
+    const dislikes = ctx.request.body.dislikes;
+    await new Promise((r)=>{
+        db.run(`
+            UPDATE craft
+            SET likes = ${likes}, dislikes = ${dislikes} 
+            WHERE id = ${id}
+        `,()=>{
+            ctx.body = "修改成功";
+            r();
+        })
+    })
 
 })
 
+
+router.post("/queryCraftHistoryById",async (ctx)=>{
+    // 查询区块链
+    ctx.body = [
+        {time:new Date().getTime()+1,owner: "lin"},
+        {time:new Date().getTime()+2,owner: "lin"},
+        {time:new Date().getTime()+3,owner: "lin"},
+        {time:new Date().getTime()+4,owner: "lin"},
+        {time:new Date().getTime()+5,owner: "lin"},
+    ]
+})
 
 app.use(router.routes())
 app.use(router.allowedMethods());

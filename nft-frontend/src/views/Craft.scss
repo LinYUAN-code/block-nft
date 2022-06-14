@@ -1,0 +1,41 @@
+
+
+.Craft-container {
+    margin-top: 10vh;
+    .img-container {
+        margin: 0 auto;
+        width: 30vw;
+        img {
+            width: 100%;
+        }
+    }
+    .des-container {
+        margin-left: 12vw;
+        font-style: italic;
+        font-family: "Ink Free";
+        .like-container {
+            margin-top: 20px;
+            user-select: none;
+            .like {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+        .history-container {
+
+            .history-row {
+                display: flex;
+                position: relative;
+                div {
+                    &:nth-child(2) {
+                        position: absolute;
+                        right: 28%;
+                    }
+                }
+            }
+        }
+    }
+
+
+}

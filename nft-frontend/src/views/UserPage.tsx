@@ -54,6 +54,7 @@ function UserPage() {
         let formData = new FormData();
         formData.append("file",form.file);
         formData.append("name",formName);
+        formData.append("owner",store.user.name);
         await httpUploadCraft(formData);
         toast.success('🧙🏻‍♂️upload success!', {
             position: "top-right",

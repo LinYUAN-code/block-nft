@@ -4,16 +4,19 @@ import "./Header.scss"
 export default function Header(props: Props) {
     const store = useStore();
     const onLogin = () => {
-        props.cv("login");
+        props.cv("login",null);
     }
     const onRegiste = () => {
-        props.cv("registe");
+        props.cv("registe",null);
     }
     const onHome = () => {
-        props.cv("/");
+        props.cv("/",null);
     }
     const onUser = () => {
-        props.cv("/userPage")
+        props.cv("/userPage",null)
+    }
+    const onSearch = () => {
+        props.cv("/search",null);
     }
     return (
         <div className='Header-container'>
@@ -24,7 +27,7 @@ export default function Header(props: Props) {
                 :<span onClick={onLogin}>Login</span>
             }
             <span onClick={onRegiste}>registe</span>
-            <span>Search</span>
+            <span onClick={onSearch}>Search</span>
         </div>
     )
 }

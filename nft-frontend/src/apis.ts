@@ -112,3 +112,26 @@ type QueryCraftListsByNameData = {
 export async function httpQueryCraftListsByName(data: QueryCraftListsByNameData):Promise<Array<Craft>> {
     return await fetch.post<Array<Craft>>("/queryCraftListsByName",data);
 }
+
+type QueryCraftByIdData = {
+    id: number
+}
+export async function httpQueryCraftById(data: QueryCraftByIdData):Promise<Craft> {
+    return await fetch.post<Craft>("/queryCraftById",data);    
+}
+
+type UpdateLikesByIdData = {   
+    id: number,
+    likes: number,
+    dislikes: number,
+}
+export async function httpUPdateLikesById(data:UpdateLikesByIdData):Promise<string> {
+    return await fetch.post<string>("/updateLikesById",data);
+}
+
+type QueryCraftHistoryByIdData = {
+    id: number
+}
+export async function httpQueryCraftHistoryById(data:QueryCraftHistoryByIdData):Promise<Array<CraftHistory>> {
+    return await fetch.post<Array<CraftHistory>>("/queryCraftHistoryById",data)
+}

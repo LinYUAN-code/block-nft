@@ -46,7 +46,6 @@ function Home(props: Props) {
 
     return (
         <div className="Home-container">
-            <div className="scrollControll"></div>
             <h2>What is Nft?</h2>
             <p>A non-fungible token (NFT) is a financial security consisting of 
                 digital data stored in a blockchain, a form of distributed ledger. 

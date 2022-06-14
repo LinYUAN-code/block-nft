@@ -25,3 +25,8 @@ type Craft = {
     "likes": number,
     "dislikes": number,
 }
+
+type CraftHistory = {
+    time: number,
+    owner: string,
+}
