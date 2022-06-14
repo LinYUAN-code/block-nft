@@ -6,15 +6,27 @@ const path = require("path")
 const sqlite3 = require('sqlite3').verbose()
 const db = new sqlite3.Database('dapp')
 const initDB = require("./createDb")
-const bodyparser = require("koa-bodyparser");
 const {createUser, transfer} = require("./caller")
-
+const Cors = require("koa-cors");
+const KoaBody = require("koa-body");
+const { getFileType } = require("./utils");
 initDB();
 
 const app = new Koa();
+const BASE_ADDR = "http://110.64.88.38:7898";
 
-app.use(KoaStatic("./static"));
-app.use(bodyparser());
+
+app.use(Cors());
+app.use(KoaStatic("tmp"));
+app.use(KoaBody({
+    multipart: true,
+    strict: false,
+    patchNode: true,
+    formidable: {
+        keepExtensions: true,
+        maxFileSize: 20 * 1024 * 1024    // 设置上传文件大小最大限制，最大为20mb
+    }
+}));
 
 const router = new Router();
 
@@ -55,7 +67,8 @@ router.post("/registe",async (ctx)=>{
     const name = ctx.request.body.name;
     const pwd = ctx.request.body.pwd;
     // 先在合约里面创建一个用户
-    createUser(name,0);
+    // createUser(name,0);
+    
     await new Promise((r)=>{
         db.all(`
             SELECT * FROM user 
@@ -92,6 +105,7 @@ router.post("/add",(ctx)=>{
     ctx.body = "200";
 })
 
+
 function getUserByName(name) {
     return new Promise((r)=>[
         db.all(`
@@ -105,6 +119,46 @@ function getUserByName(name) {
         })
     ]);
 }
+
+router.post("/uploadCraft",async (ctx)=>{
+    let id;
+    await new Promise((r)=>{
+        db.all(`
+            SELECT id
+            from craft
+            where id = (select max(id) from craft);
+        `,(err,rows)=>{
+            if(!rows.length) {
+                id = 1;
+            } else {
+                id = rows[0].id + 1;
+            }
+            r();
+        })
+    });
+    
+    const name = ctx.request.body.name;
+    const owner = ctx.request.body.owner;
+    const file = ctx.request.files.file;
+    const url = `${BASE_ADDR}/${id}.${getFileType(file.filepath)}`;
+    const fileUrl = `./tmp/${id}.${getFileType(file.filepath)}`;
+    let writer = fs.createWriteStream(fileUrl);
+    let reader = fs.createReadStream(file.filepath);
+    reader.pipe(writer);
+    const time = new Date().getTime();
+    // 操作合约
+
+    // 保存到数据库
+    await new Promise((r)=>{
+        db.run(`
+            INSERT INTO craft (id,name,owner,url,time,likes,dislikes) VALUES 
+            (${id},"${name}","${owner}","${url}",${time},${0},${0});
+        `,()=>{
+            r();
+            ctx.body = "上传成功";
+        })
+    });
+})
 
 router.post("/transfer",async (ctx)=>{
     const fromName = ctx.request.body.fName;
@@ -141,6 +195,37 @@ router.post("/transfer",async (ctx)=>{
     })
     ctx.body = "转账成功";
 });
+
+
+router.post("/getCraftLists",async (ctx)=>{
+    await new Promise((r)=>{
+        db.all(`
+            SELECT *
+            FROM craft
+        `,(err,rows)=>{
+            ctx.body = rows;
+            r();
+        })
+    })
+})
+
+
+router.post("/queryCraftListsByName",async (ctx)=>{
+    const pattern = ctx.request.body.pattern;    
+    await new Promise((r)=>{
+        db.all(`
+            SELECT *
+            FROM craft
+            WHERE name LIKE '%${pattern}%';
+        `,(err,rows)=>{
+            ctx.body = rows;
+            r();
+        })
+    })
+
+})
+
+
 app.use(router.routes())
 app.use(router.allowedMethods());
 app.use((ctx)=>{
@@ -149,6 +234,8 @@ app.use((ctx)=>{
 })
 
 
+
 app.listen(7898,()=>{
     console.log(`服务器启动于: http://127.0.0.1:7898`);
 })
+
