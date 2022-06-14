@@ -1,0 +1,25 @@
+
+.Header-container {
+    overflow: hidden;
+    box-shadow: 0px 4px 50px var(--text);
+    margin-bottom: 40px;
+    span {
+        box-sizing: border-box;
+        font-style: italic;
+        height: 30px;
+        text-align: center;
+        text-shadow: 1px 1px var(--text);
+        margin: 0 10px;
+        width: 70px;
+        &:nth-child(1) {
+            float: left;
+        }
+        &:nth-child(n+2) {
+            float: right;
+        }
+        &:hover {
+            cursor: pointer;
+            border-bottom: 5px solid var(--text);
+        }
+    }
+}

@@ -1,0 +1,13 @@
+
+
+.CraftCard-container {
+    transition: transform .4s ease;
+    img {
+        width: 100%;
+    }
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+        z-index: 1;
+    }
+}

@@ -1,0 +1,39 @@
+
+
+.ShowCraft-container {
+    position: relative;
+    width: 400px;
+    height: 350px;
+    margin: 0 auto;
+    .content {
+        position: absolute;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        height: 300px;
+        width: 400px;
+    }
+    .back-content {
+        z-index: -1;
+    }
+    .Control {
+        display: flex;
+        justify-content: center;
+        transform: translate(0,300px);
+        .control-bar {
+            width: 30px;
+            height: 10px;
+            border-bottom: 4px solid var(--accent-bg);
+            cursor: pointer;
+            &:nth-child(n+2) {
+                margin-left: 10px;
+            }
+        }
+        .active {
+            border-bottom: 4px solid var(--text);
+            &:hover {
+                cursor: default;
+            }
+        }
+    }
+}

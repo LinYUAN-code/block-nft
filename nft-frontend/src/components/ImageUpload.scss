@@ -1,0 +1,34 @@
+
+.ImageUpload-container {
+    position: relative;
+    input[type="file"] {
+        top: 0;
+        left: 0;
+        position: absolute;
+        cursor: pointer;
+        opacity: 0;
+    }
+    .uploader {
+        border: 1px solid var(--text);
+        position: relative;
+        &::before {
+            content: "";
+            width: 80%;
+            left: 10%;
+            position: absolute;
+            border-top: 1px dashed var(--text);
+            top: 50%;
+        }
+        &::after {
+            content: "";
+            height: 80%;
+            position: absolute;
+            border-left: 1px dashed var(--text);
+            top: 10%;
+            left: 50%;
+        }
+    }
+    img {
+
+    }
+}

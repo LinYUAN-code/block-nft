@@ -1,0 +1,29 @@
+
+
+.Home-container {
+    .cloundText {
+        font-size: 16px;
+        font-weight: 500;
+    }
+    .scrollControll {
+        position: absolute;
+        height: 6000px;
+        width: 100px;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+    .craftImage {
+        display: flex;
+        img {
+            width: 100%;
+        }
+        .bii {
+            width: 10vw;
+        }
+        .bi {
+            width: 7vw;
+            height: 100px;
+        }
+    }
+}

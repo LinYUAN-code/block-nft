@@ -1,0 +1,9 @@
+@import './global.scss';
+
+.App-container {
+    @import './body.scss';
+}
+
+* {
+    box-sizing: border-box;
+}
