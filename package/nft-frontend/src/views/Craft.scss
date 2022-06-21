@@ -1,0 +1,121 @@
+
+
+.Craft-container {
+    margin-top: 10vh;
+    .modal-container {
+        z-index: 999;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,.5);
+        .modal {
+            position: absolute;
+            top: calc(50% - 100px);
+            left: calc(50% - 200px);
+            width: 400px;
+            background-color: var(--bg);
+            padding: 10px 30px;
+            border-radius: 20px;
+            box-shadow: 1px 1px 10px rgba(255,255,255,.3);
+            .contro {
+                position: relative;
+                height: 30px;
+                border-bottom: 1px solid rgba(255,255,255,.5);
+                div {
+                    position: absolute;
+                    right: 0%;
+                    font-size: 24px;
+                    height: 25px;
+                    line-height: 21px;
+                    width: 40px;
+                    text-align: center;
+                    cursor: pointer;
+                    transition: all .2s ease;
+                    &:hover {
+                        background-color: rgb(232, 17, 35);
+                    }
+                }
+            }
+            .editor {
+                margin-top: 20px;
+                padding-left: 30px;
+                .row {
+                    display: flex;
+                    justify-content: center;
+                    button {
+                        margin-left: -30px;
+                        height: 35px;
+                        font-family: "Ink Free";
+                        padding-top: 10px;
+                        font-weight: bold;
+                    }
+                }
+                .ed {
+                    display: flex;
+                    align-items: center;
+                    margin-top: 10px;
+                    span {
+                        margin-right: 20px;
+                        font-style: italic;
+                    }
+                    input {
+                        height: 20px;
+                        font-size: 14px;
+                    }
+                    textarea {
+                        font-size: 14px;
+                        font-family: "STXingkai";
+                    }
+                }
+            }
+        }
+    }
+
+    .img-container {
+        margin: 0 auto;
+        width: 30vw;
+        img {
+            width: 100%;
+        }
+    }
+    .des-container {
+        margin-left: 12vw;
+        font-style: italic;
+        font-family: "Ink Free";
+        .like-container {
+            margin-top: 20px;
+            user-select: none;
+            .like {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            button {
+                margin-left: 240px;
+                height: 35px;
+                font-family: "Ink Free";
+                padding-top: 10px;
+                font-weight: bold;
+            }
+        }
+        .history-container {
+
+            .history-row {
+                display: flex;
+                position: relative;
+                div {
+                    &:nth-child(2) {
+                        position: absolute;
+                        right: 28%;
+                    }
+                }
+            }
+        }
+    }
+
+
+}

@@ -1,0 +1,23 @@
+
+
+.OfferCard-container {
+    margin-top: 20px;
+    font-family: "Ink Free";
+    background-color: rgba(100,200,255,.2);
+    padding: 0 10px;
+    .name {
+        font-family: "STXingkai";
+        margin-right: 5px;
+    }
+    .btn-container {
+        margin-left: 100px;
+        .button {
+            cursor: pointer;
+        }
+    }
+    .intro {
+        font-size: 14px;
+        font-family: "STXingkai";
+        padding: 20px;
+    }
+}
